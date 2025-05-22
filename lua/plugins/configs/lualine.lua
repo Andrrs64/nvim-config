@@ -95,6 +95,15 @@ local conditions = {
     end
 }
 
+local isRecording = function()
+    local reg = vim.fn.reg_recording()
+    if reg == "" then
+        return ""
+    else
+        return "󰑊" .. reg
+    end
+end
+
 -- Config
 local config = {
     options = {
@@ -122,7 +131,7 @@ local config = {
         -- }
     },
     sections = {
-        lualine_a = { 'mode' },
+        lualine_a = { 'mode', isRecording },
         lualine_b = { 'filename' },
         lualine_c = { 'diff' },
         lualine_x = { 'branch' },
@@ -191,13 +200,6 @@ local config = {
                 icon = " LSP:",
             },
         },
-        -- -- these are to remove the defaults
-        -- lualine_a = {},
-        -- lualine_b = {},
-        -- lualine_y = {},
-        -- lualine_z = {},
-        -- lualine_c = {},
-        -- lualine_x = {}
     },
     tabline = {
         lualine_a = {
@@ -206,19 +208,6 @@ local config = {
                 max_length = vim.o.columns * 2 / 3,
                 right_padding = 5,
                 left_padding = 5,
-                -- buffers_color = {
-                --     -- Same values as the general color option can be used here.
-                --     active = {
-                --         fg = colors.fg,
-                --         bg = colors.bg,
-                --         gui = "bold"
-                --     }, -- Color for active buffer.
-                --     inactive = {
-                --         fg = colors.bg,
-                --         bg = colors.fg,
-                --         gui = "italic"
-                --     }, -- Color for inactive buffer.
-                -- },
                 symbols = {
                     modified = ' ●', -- Text to show when the buffer is modified
                     alternate_file = '', -- Text to show to identify the alternate file
@@ -228,183 +217,6 @@ local config = {
         },
     },
 }
-
--- -- Inserts a component in lualine_c at left section
--- local function ins_left(component)
---     table.insert(config.sections.lualine_c, component)
--- end
---
--- -- Inserts a component in lualine_x ot right section
--- local function ins_right(component)
---     table.insert(config.sections.lualine_x, component)
--- end
---
--- ins_left {
---     -- mode component
---     function()
---         return "▶"
---     end,
---     color = function()
---         -- auto change color according to neovims mode
---         local mode_color = {
---             n = colors.red,
---             i = colors.green,
---             v = colors.blue,
---             [""] = colors.blue,
---             V = colors.blue,
---             c = colors.magenta,
---             no = colors.red,
---             s = colors.yellow,
---             S = colors.yellow,
---             [""] = colors.yellow,
---             ic = colors.yellow,
---             R = colors.white,
---             Rv = colors.white,
---             cv = colors.red,
---             ce = colors.red,
---             r = colors.cyan,
---             rm = colors.cyan,
---             ["r?"] = colors.cyan,
---             ["!"] = colors.red,
---             t = colors.red
---         }
---         return {
---             fg = mode_color[vim.fn.mode()]
---         }
---     end
--- }
---
--- ins_left {
---     "filename",
---     cond = conditions.buffer_not_empty,
---     color = {
---         fg = colors.magenta,
---         gui = "bold"
---     }
--- }
---
--- ins_left {
---     "branch",
---     icon = " ",
---     color = {
---         fg = colors.blue,
---         gui = "bold"
---     }
--- }
---
--- ins_left {
---     "diff",
---     -- Is it me or the symbol for modified us really weird
---     symbols = {
---         added = " ",
---         modified = " ",
---         removed = " "
---     },
---     diff_color = {
---         added = {
---             fg = colors.green
---         },
---         modified = {
---             fg = colors.yellow
---         },
---         removed = {
---             fg = colors.red
---         }
---     },
---     cond = conditions.hide_in_width
--- }
---
--- -- Insert mid section. You can make any number of sections in neovim :)
--- -- for lualine it"s any number greater then 2
--- ins_left { function()
---     return "%="
--- end }
---
--- ins_right {
---     -- Lsp server name .
---     function()
---         local msg = "null"
---         local buf_ft = vim.api.nvim_buf_get_option(0, "filetype")
---         local clients = vim.lsp.get_active_clients()
---         if next(clients) == nil then
---             return msg
---         end
---         for _, client in ipairs(clients) do
---             local filetypes = client.config.filetypes
---             if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
---                 return client.name
---             end
---         end
---         return msg
---     end,
---     icon = " LSP:",
---     color = {
---         fg = colors.cyan,
---         gui = "bold"
---     }
--- }
---
--- ins_right {
---     "diagnostics",
---     sources = { "nvim_diagnostic" },
---     symbols = {
---         error = " ",
---         warn = " ",
---         info = " ",
---         hints = "󰛩 ",
---     },
---     diagnostics_color = {
---         color_error = {
---             fg = colors.red
---         },
---         color_warn = {
---             fg = colors.yellow
---         },
---         color_info = {
---             fg = colors.cyan
---         },
---         color_hints = {
---             fg = colors.magenta
---         }
---     },
---     always_visible = true
--- }
---
--- ins_right {
---     "o:encoding", -- option component same as &encoding in viml
---     fmt = string.upper,
---     cond = conditions.hide_in_width,
---     color = {
---         fg = colors.green,
---         gui = "bold"
---     }
--- }
---
--- ins_right {
---     "fileformat",
---     fmt = string.upper,
---     icons_enabled = true,
---     color = {
---         fg = colors.green,
---         gui = "bold"
---     }
--- }
---
--- ins_right {
---     "location",
---     color = {
---         fg = colors.fg,
---         gui = "bold"
---     }
--- }
---
--- ins_right {
---     "progress",
---     color = {
---         fg = colors.fg,
---         gui = "bold"
---     }
--- }
 
 -- Now don"t forget to initialize lualine
 lualine.setup(config)
