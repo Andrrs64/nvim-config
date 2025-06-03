@@ -27,8 +27,8 @@ return {
     use_languagetree = true
   },
   indent = {
-    enable = true,
-    disable = { 'c' },
+    enable = false,
+    -- disable = { 'c' },
   },
   autotag = {
     enable = true

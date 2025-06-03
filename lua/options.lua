@@ -19,9 +19,11 @@ local indent = 4
 
 g.mapleader = " "
 
-cmd([[
-	filetype plugin indent on
-]])
+cmd([[ filetype plugin indent on ]])
+
+-- disable autoformatting on save for zig
+-- Why this is enabled by default, I don't know.
+cmd([[ let g:zig_fmt_autosave = 0 ]])
 
 opt.backspace = { "eol", "start", "indent" } -- allow backspacing over everything in insert mode
 -- opt.clipboard = "unnamedplus"                -- allow neovim to access the system clipboard
@@ -121,6 +123,7 @@ local disabled_built_ins = {
 for _, plugin in pairs(disabled_built_ins) do
 	g["loaded_" .. plugin] = 1
 end
+
 
 -- Colorscheme
 -- By default, use rose-pine

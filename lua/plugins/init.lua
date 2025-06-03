@@ -26,12 +26,12 @@ local builtin_plugins = {
   },
   -- Formatter
   -- Lightweight yet powerful formatter plugin for Neovim
-  {
-    "stevearc/conform.nvim",
-    opts = {
-      formatters_by_ft = { lua = { "stylua" } },
-    },
-  },
+  -- {
+  --   "stevearc/conform.nvim",
+  --   opts = {
+  --     formatters_by_ft = { lua = { "stylua" } },
+  --   },
+  -- },
   -- Git integration for buffers
   {
     "lewis6991/gitsigns.nvim",

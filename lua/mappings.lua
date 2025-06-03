@@ -14,12 +14,6 @@
 local map = vim.keymap.set
 local lsp = vim.lsp.buf
 
--- Move around splits
--- map("n", "<leader>wh", "<C-w>h", { desc = "switch window left" })
--- map("n", "<leader>wj", "<C-w>j", { desc = "switch window right" })
--- map("n", "<leader>wk", "<C-w>k", { desc = "switch window up" })
--- map("n", "<leader>wl", "<C-w>l", { desc = "switch window down" })
-
 -- Reload configuration without restart nvim
 map("n", "<leader>r", ":source $MYVIMRC<CR>", { desc = "Reload configuration without restart nvim" })
 
@@ -103,12 +97,17 @@ map("n", "<leader>tv", "<cmd>vsplit term://zsh<CR>")
 
 -- dap
 local dap = require('dap')
+local adap = require('AndrrsDap')
+
+map('n', '<leader>dr', function() adap.start_debugger() end)
 map('n', '<leader>bp', function() dap.toggle_breakpoint() end)
-map('n', '<leader>rd', function() dap.continue() end)
+map('n', '<leader>dc', function() dap.continue() end)
 map('n', '<leader>so', function() dap.step_over() end)
 map('n', '<leader>si', function() dap.step_into() end)
 
+
 -- copilot
+-- F12 is easily accessible for me via a keyboard layer (I am not a psychopath)
 map('i', '<F12>', 'copilot#Accept("\\<CR>")', {
   expr = true,
   replace_keycodes = false

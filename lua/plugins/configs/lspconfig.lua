@@ -24,7 +24,12 @@ local formatting_servers = {
     init_options = {
       provideFormatter = false,
     }
-  }
+  },
+  zls = {
+    init_options = {
+      provideFormatter = false,
+    }
+  },
 }
 
 -- Merge

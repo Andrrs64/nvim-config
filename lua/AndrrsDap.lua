@@ -1,4 +1,3 @@
-local buildOptionsLoaded = false
 local opts = {
     buildCommand = nil,
     buildFolder = nil,
@@ -20,21 +19,48 @@ local _read_opt_file = function()
     end
 end
 
-local _start_debugger = function()
-    if buildOptionsLoaded == false then
-        buildOptionsLoaded = _read_opt_file()
-        if buildOptionsLoaded == false then
+local _get_executable_path = function()
+    _read_opt_file()
+    if string.sub(opts.buildFolder, 1, 1) == '/' then
+        return opts.buildFolder .. "/" .. opts.applicationName
+    else
+        return vim.fn.getcwd() .. '/' .. opts.buildFolder .. '/' .. opts.applicationName
+    end
+end
+
+local start_debugger = function()
+    print("Starting debugger...")
+    _read_opt_file()
+
+    if opts.buildCommand ~= 0 then
+        local cmd = {}
+
+        for str in string.gmatch(opts.buildCommand, '%S+') do
+            table.insert(cmd, str)
+        end
+        local buildRes = vim.system(cmd):wait()
+
+        if buildRes.code == 0 then
+            require("dap").continue()
+        else
+            local stderr_lines = {}
+            for line in buildRes.stderr:gmatch("[^\n]+") do
+                table.insert(stderr_lines, line)
+            end
+
+            vim.cmd('new')
+            vim.bo.buftype = 'nofile'
+            vim.bo.bufhidden = 'wipe'
+            vim.bo.swapfile = false
+            vim.bo.modifiable = true
+
+            vim.api.nvim_buf_set_lines(0, 0, -1, false, stderr_lines)
+            vim.api.nvim_buf_set_name(0, "Build error")
             return
         end
     end
-
-      vim.cmd("split | te cd " .. opts.buildFolder .. " && " .. opts.buildCommand)
-      if string.sub(opts.buildFolder, 1, 1) == '/' then
-          return opts.buildFolder .. "/" .. opts.applicationName
-      else
-          return vim.fn.getcwd() .. '/' .. opts.buildFolder .. '/' .. opts.applicationName
-      end
 end
+
 
 local setup = function()
     local dap = require "dap"
@@ -54,7 +80,29 @@ local setup = function()
             name = "Launch",
             type = "codelldb",
             request = "launch",
-            program = _start_debugger,
+            program = _get_executable_path,
+            cwd = "${workspaceFolder}",
+            stopOnEntry = false,
+        }
+    }
+
+    dap.configurations.zig = {
+        {
+            name = "Launch",
+            type = "codelldb",
+            request = "launch",
+            program = _get_executable_path,
+            cwd = "${workspaceFolder}",
+            stopOnEntry = false,
+        }
+    }
+
+    dap.configurations.odin = {
+        {
+            name = "Launch",
+            type = "codelldb",
+            request = "launch",
+            program = _get_executable_path,
             cwd = "${workspaceFolder}",
             stopOnEntry = false,
         }
@@ -68,10 +116,12 @@ local setup = function()
       ui.close()
     end, {})
 
+    vim.keymap.set('n', '<leader>dr', start_debugger)
+
     vim.keymap.set("n", "<leader>bp", dap.toggle_breakpoint)
-    vim.keymap.set('n', '<leader>rd', dap.continue)
+    vim.keymap.set('n', '<leader>dc', dap.continue)
     vim.keymap.set('n', '<leader>so', dap.step_over)
     vim.keymap.set('n', '<leader>si', dap.step_into)
 end
 
-return { setup = setup }
+return { setup = setup, start_debugger = start_debugger }
