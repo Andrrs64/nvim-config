@@ -64,7 +64,7 @@ opt.listchars = {
 }
 
 -- Hide cmd line
-opt.cmdheight = 0      -- more space in the neovim command line for displaying messages
+-- opt.cmdheight = 0      -- more space in the neovim command line for displaying messages
 
 opt.mouse = "a"        -- allow the mouse to be used in neovim
 opt.number = true      -- set numbered lines
@@ -73,7 +73,8 @@ opt.sidescrolloff = 3  -- minimal number of screen columns to keep to the left a
 opt.signcolumn = "yes" -- always show the sign column, otherwise it would shift the text each time
 opt.splitbelow = true  -- open new split below
 opt.splitright = true  -- open new split to the right
-opt.wrap = false       -- dispable wrapping lines
+opt.colorcolumn = '100'
+-- opt.wrap = false       -- dispable wrapping lines
 
 -- backups
 opt.backup = false      -- create a backup file
@@ -109,7 +110,8 @@ opt.undolevels = 1000
 opt.undoreload = 10000
 
 -- fold
-opt.foldmethod = "marker"
+opt.foldmethod = "expr"
+opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 opt.foldlevel = 99
 
 -- Disable builtin plugins
@@ -127,4 +129,4 @@ end
 
 -- Colorscheme
 -- By default, use rose-pine
-cmd.colorscheme("rose-pine")
+cmd.colorscheme("nord")

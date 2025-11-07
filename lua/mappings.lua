@@ -11,8 +11,9 @@
 -- Author: Kien Nguyen-Tuan <kiennt2609@gmail.com>
 
 -- <leader> is a space now
-local map = vim.keymap.set
-local lsp = vim.lsp.buf
+local map   = vim.keymap.set
+local lsp   = vim.lsp.buf
+local utils = require("utils")
 
 -- Reload configuration without restart nvim
 map("n", "<leader>r", ":source $MYVIMRC<CR>", { desc = "Reload configuration without restart nvim" })
@@ -26,11 +27,6 @@ map("n", "<leader>fh", builtin.help_tags, { desc = "Open Telescope to show help"
 map("n", "<leader>fo", builtin.oldfiles, { desc = "Open Telescope to list recent files" })
 map("n", "<leader>cm", builtin.git_commits, { desc = "Open Telescope to list git commits" })
 map("n", "<leader>rf", builtin.lsp_references, { desc = "Open Telescope to list references" })
-
--- NvimTree
-map("n", "<leader>n", ":NvimTreeToggle<CR>", { desc = "Toggle NvimTree sidebar" })    -- open/close
-map("n", "<leader>nr", ":NvimTreeRefresh<CR>", { desc = "Refresh NvimTree" })         -- refresh
-map("n", "<leader>nf", ":NvimTreeFindFile<CR>", { desc = "Search file in NvimTree" }) -- search file
 
 -- LSP
 map("n", "<leader>pf", function()
@@ -79,10 +75,10 @@ local harpoon = require("harpoon")
 map("n", "<leader>hr", function() harpoon:list():add() end)
 map("n", "<leader>he", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
 
-map("n", "<leader>ha", function() harpoon:list():select(1) end)
-map("n", "<leader>hs", function() harpoon:list():select(2) end)
-map("n", "<leader>hd", function() harpoon:list():select(3) end)
-map("n", "<leader>hf", function() harpoon:list():select(4) end)
+map("n", "<C-h>", function() harpoon:list():select(1) end)
+map("n", "<C-j>", function() harpoon:list():select(2) end)
+map("n", "<C-k>", function() harpoon:list():select(3) end)
+map("n", "<C-l>", function() harpoon:list():select(4) end)
 
 map("n", "<leader>hn", function() harpoon:list():next() end)
 map("n", "<leader>hp", function() harpoon:list():prev() end)
@@ -127,3 +123,10 @@ map('n', '<F5>', function()
   if command == nil or command == "" then return end
   vim.cmd("te {" .. command .. "}")
 end, { desc = "Run terminal command" })
+
+-- Newlines at spaces
+map('n', 'K', "V:s/\\([\\[{(;,]\\) /\\1\\r/g | noh<CR>")
+
+-- Open selection as a buffer (relative or absolute)
+map('v', '<C-a>', utils.go_to_selection)
+

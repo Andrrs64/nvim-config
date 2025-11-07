@@ -116,6 +116,19 @@ local setup = function()
       ui.close()
     end, {})
 
+    dap.listeners.before.attach.dapui_config = function()
+      ui.open()
+    end
+    dap.listeners.before.launch.dapui_config = function()
+      ui.open()
+    end
+    dap.listeners.before.event_terminated.dapui_config = function()
+      ui.close()
+    end
+    dap.listeners.before.event_exited.dapui_config = function()
+      ui.close()
+    end
+
     vim.keymap.set('n', '<leader>dr', start_debugger)
 
     vim.keymap.set("n", "<leader>bp", dap.toggle_breakpoint)

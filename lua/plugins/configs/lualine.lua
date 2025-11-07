@@ -79,7 +79,7 @@ local function loadcolors()
     return colors
 end
 
-local colors = loadcolors()
+-- local colors = loadcolors()
 
 local conditions = {
     buffer_not_empty = function()
@@ -111,7 +111,7 @@ local config = {
         component_separators = "",
         section_separators = "",
         disabled_filetypes = { "Lazy", "NvimTree" },
-        theme = 'ayu_mirage',
+        theme = 'nord', -- 'ayu_mirage',
         -- theme = {
         --     -- We are going to use lualine_c an lualine_x as left and
         --     -- right section. Both are highlighted by c theme .  So we
@@ -215,6 +215,14 @@ local config = {
                 },
             },
         },
+        lualine_z = {
+            {
+                "tabs",
+                max_length = vim.o.columns * 1 / 3,
+                right_padding = 5,
+                left_padding = 5,
+            }
+        }
     },
 }
 

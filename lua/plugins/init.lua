@@ -74,12 +74,12 @@ local builtin_plugins = {
   },
   -- Statusline
   -- A blazing fast and easy to configure neovim statusline plugin written in pure lua.
-  {
-    "nvim-lualine/lualine.nvim",
-    opts = function()
-      require("plugins.configs.lualine")
-    end
-  },
+  -- {
+  --   "nvim-lualine/lualine.nvim",
+  --   opts = function()
+  --     require("plugins.configs.lualine")
+  --   end
+  -- },
   -- colorscheme
   {
     -- Rose-pine - Soho vibes for Neovim
@@ -88,6 +88,9 @@ local builtin_plugins = {
     opts = {
       dark_variant = "main"
     }
+  },
+  {
+    "shaunsingh/nord.nvim",
   },
   -- LSP stuffs
   -- Portable package manager for Neovim that runs everywhere Neovim runs.
@@ -188,7 +191,7 @@ require("lazy").setup({
     -- install missing plugins on startup
     missing = true,
     -- try to load one of these colorschemes when starting an installation during startup
-    colorscheme = { "rose-pine", "habamax" }
+    colorscheme = { "nord", "rose-pine", "habamax" }
   },
   checker = {
     -- automatically check for plugin updates

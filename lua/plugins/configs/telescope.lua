@@ -9,6 +9,9 @@
 -- File: plugins/configs/telescope.lua
 -- Description: nvim-telescope config
 -- Author: Kien Nguyen-Tuan <kiennt2609@gmail.com>
+
+local actions = require("telescope.actions")
+
 return {
     defaults = {
         prompt_prefix = "   ",
@@ -24,7 +27,11 @@ return {
             height = 0.80,
         },
         mappings = {
-            n = { ["q"] = require("telescope.actions").close },
+            n = {
+                ["q"] = actions.close,
+                ["<Tab>"] = actions.toggle_selection + actions.move_selection_worse,
+                ["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
+            },
         },
     },
 
