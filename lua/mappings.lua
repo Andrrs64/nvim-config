@@ -25,3 +25,15 @@ map("n", "-", "<cmd>Oil<CR>", { desc = "Open file explorer" })
 -- Easy align
 map("x", "ga", "<Plug>(EasyAlign)")
 map("n", "ga", "<Plug>(EasyAlign)")
+
+-- Harpoon
+local harpoon = require("harpoon")
+harpoon:setup()
+
+map("n", "<leader>hr", function() harpoon:list():add() end)
+map("n", "<leader>he", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
+
+map("n", "<leader>1", function() harpoon:list():select(1) end)
+map("n", "<leader>2", function() harpoon:list():select(2) end)
+map("n", "<leader>3", function() harpoon:list():select(3) end)
+map("n", "<leader>3", function() harpoon:list():select(3) end)

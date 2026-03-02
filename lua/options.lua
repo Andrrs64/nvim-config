@@ -31,3 +31,5 @@ opt.clipboard = "unnamedplus"
 
 opt.updatetime = 250
 opt.colorcolumn = '100'
+
+vim.api.nvim_create_user_command("LG", "te lazygit", {})

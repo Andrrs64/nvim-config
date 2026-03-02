@@ -19,6 +19,11 @@ return {
         -- this is equivalent to setup({}) function
     },
     {
+        "ThePrimeagen/harpoon",
+        branch = "harpoon2",
+        dependencies = { "nvim-lua/plenary.nvim" }
+    },
+    {
         "jake-stewart/multicursor.nvim",
         branch = "1.0",
         config = function()
