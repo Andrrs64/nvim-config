@@ -33,3 +33,12 @@ opt.updatetime = 250
 opt.colorcolumn = '100'
 
 vim.api.nvim_create_user_command("LG", "te lazygit", {})
+
+local autocmd = vim.api.nvim_create_autocmd
+
+autocmd("TermOpen", {
+  pattern = "*",
+  callback = function()
+    vim.cmd("startinsert")
+  end
+})
