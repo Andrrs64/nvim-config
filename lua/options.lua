@@ -32,13 +32,10 @@ opt.clipboard = "unnamedplus"
 opt.updatetime = 250
 opt.colorcolumn = '100'
 
-vim.api.nvim_create_user_command("LG", "te lazygit", {})
+vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
 
-local autocmd = vim.api.nvim_create_autocmd
-
-autocmd("TermOpen", {
-  pattern = "*",
-  callback = function()
-    vim.cmd("startinsert")
-  end
-})
+-- neovide
+if vim.g.neovide then
+    vim.g.neovide_scroll_animation_length = 0.1
+    vim.g.neovide_cursor_animation_length = 0.05
+end
