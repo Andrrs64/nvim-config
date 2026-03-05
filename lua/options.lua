@@ -38,4 +38,7 @@ vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,
 if vim.g.neovide then
     vim.g.neovide_scroll_animation_length = 0.1
     vim.g.neovide_cursor_animation_length = 0.05
+    vim.g.neovide_opacity                 = 0.9
+    vim.g.neovide_normal_opacity          = 0.9
+    vim.g.neovide_window_blurred          = true
 end
