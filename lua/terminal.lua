@@ -39,12 +39,7 @@ local _tmux_popup = function()
     _float_term("tmux new-session -As popup")
 end
 
-local _lazygit = function()
-    _float_term("lazygit")
-end
-
 return {
     float_term = _float_term,
     tmux_popup = _tmux_popup,
-    lazygit    = _lazygit,
 }

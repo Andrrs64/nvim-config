@@ -3,6 +3,9 @@ local map = vim.keymap.set
 -- Clear search highlight
 map("n", "<Esc>", "<cmd>nohlsearch<CR>")
 
+-- Paste from os clipboard in insert mode
+map("i", "<C-v>", '<ESC>"+pa')
+
 -- Telescope
 local builtin = require("telescope.builtin")
 map("n", "<leader>ff", builtin.find_files, { desc = "Find files" })
@@ -23,8 +26,9 @@ map('n', '<leader>se', vim.diagnostic.open_float, {})
 
 -- floating terminals
 local term = require("terminal")
-map('n', '<C-a><C-t>', term.tmux_popup)
-vim.api.nvim_create_user_command("LG", function(_) term.lazygit() end, {})
+vim.api.nvim_create_user_command("T",   function(_) term.tmux_popup()          end, {})
+vim.api.nvim_create_user_command("LG",  function(_) term.float_term("lazygit") end, {})
+vim.api.nvim_create_user_command("Top", function(_) term.float_term("btop")    end, {})
 
 -- Oil
 map("n", "-", "<cmd>Oil<CR>", { desc = "Open file explorer" })
