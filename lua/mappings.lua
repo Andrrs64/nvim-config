@@ -30,6 +30,10 @@ vim.api.nvim_create_user_command("T",   function(_) term.tmux_popup()          e
 vim.api.nvim_create_user_command("LG",  function(_) term.float_term("lazygit") end, {})
 vim.api.nvim_create_user_command("Top", function(_) term.float_term("btop")    end, {})
 
+-- Notes
+local notes = require("dirnotes")
+vim.api.nvim_create_user_command("Notes", function(_) notes.open_dir(true) end, {})
+
 -- Oil
 map("n", "-", "<cmd>Oil<CR>", { desc = "Open file explorer" })
 
@@ -48,3 +52,5 @@ map("n", "<leader>1", function() harpoon:list():select(1) end)
 map("n", "<leader>2", function() harpoon:list():select(2) end)
 map("n", "<leader>3", function() harpoon:list():select(3) end)
 map("n", "<leader>3", function() harpoon:list():select(3) end)
+
+map("n", "<C-z>", "<nop>")

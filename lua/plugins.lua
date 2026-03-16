@@ -1,4 +1,8 @@
 return {
+    {
+        "Andrrs64/dirnotes.nvim"
+    },
+
 	-- Colorscheme
 	{
 		"shaunsingh/nord.nvim",
@@ -216,6 +220,9 @@ return {
         ---@module "auto-session"
         ---@type AutoSession.Config
         opts = {
+            cwd_change_handling = true,
+            args_allow_single_directory = false,
+
             -- The following are already the default values, no need to provide them if these are already the settings you want.
             session_lens = {
                 picker = nil, -- "telescope"|"snacks"|"fzf"|"select"|nil Pickers are detected automatically but you can also manually choose one. Falls back to vim.ui.select
