@@ -51,4 +51,8 @@ if vim.g.neovide then
     vim.keymap.set("n", "<C-->", function()
         change_scale_factor(1/1.25)
     end)
+
+    for c in ("abcdefghijklmnopqrstuvwxyz"):gmatch(".") do
+        vim.keymap.set("t", "<D-"..c..">", "<Esc>"..c, { noremap = true })
+    end
 end

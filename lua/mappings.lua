@@ -27,6 +27,7 @@ map('n', '<leader>se', vim.diagnostic.open_float, {})
 -- floating terminals
 local term = require("terminal")
 vim.api.nvim_create_user_command("T",   function(_) term.tmux_popup()          end, {})
+vim.api.nvim_create_user_command("ST",  function(_) term.float_term("$SHELL")  end, {})
 vim.api.nvim_create_user_command("LG",  function(_) term.float_term("lazygit") end, {})
 vim.api.nvim_create_user_command("Top", function(_) term.float_term("btop")    end, {})
 
@@ -40,6 +41,11 @@ map("n", "-", "<cmd>Oil<CR>", { desc = "Open file explorer" })
 -- Easy align
 map("x", "ga", "<Plug>(EasyAlign)")
 map("n", "ga", "<Plug>(EasyAlign)")
+
+-- LuaSnip
+local ls = require('luasnip')
+map({"i", "s"}, "<C-Tab>",   function() ls.jump(1)  end)
+map({"i", "s"}, "<S-Tab>", function() ls.jump(-1) end)
 
 -- Harpoon
 local harpoon = require("harpoon")
